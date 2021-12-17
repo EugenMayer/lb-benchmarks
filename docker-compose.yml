@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  backend:
+    image: eugenmayer/benchbackend
+    environment:
+      PORT: 3000
+  client:
+    image: skandyla/wrk
+    entrypoint: "sleep 80000"
+  
