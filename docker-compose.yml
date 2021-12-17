@@ -1,11 +1,40 @@
-version: "3"
+version: '3'
 
 services:
-  backend:
+  express:
     image: eugenmayer/benchbackend
+    labels:
+      traefik.http.services.express.loadbalancer.server.port: 3000
+      traefik.http.routers.express.rule: 'Host(`express.test`)'
+      traefik.http.routers.express.tls: 'false'
+      traefik.http.routers.whoami.tls.certresolver: 'default'
+      traefik.enable: 'true'
+      #traefik.port: 300
     environment:
       PORT: 3000
+  whoami:
+    image: containous/whoami
+    labels:
+      traefik.http.services.whoami.loadbalancer.server.port: 80
+      traefik.http.routers.whoami.rule: 'Host(`whoami.test`)'
+      traefik.http.routers.whoami.tls: 'false'
+      traefik.http.routers.whoami.tls.certresolver: 'default'
+      traefik.enable: 'true'
+      #traefik.port: 80
+  traefik:
+    image: ghcr.io/eugenmayer/traefik:2.x
+    restart: always
+    ports:
+      - 80:8080
+    environment:
+      TRAEFIK_ACME_ENABLE: 'false'
+      TRAEFIK_HTTPS_ENABLE: 'false'
+      TRAEFIK_ACME_CHALLENGE: 'http'
+      TRAEFIK_DOCKER_ENABLE: 'true'
+      TRAEFIK_DOCKER_EXPOSEDBYDEFAULT: 'false'
+      TRAEFIK_ADMIN_ENABLE: 'true'
+      TRAEFIK_ADMIN_SSL: 'false'
+      # use the staging server
   client:
     image: skandyla/wrk
-    entrypoint: "sleep 80000"
-  
+    entrypoint: 'sleep 80000'
