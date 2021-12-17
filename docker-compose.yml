@@ -1,17 +1,16 @@
 version: '3'
 
 services:
-  express:
-    image: eugenmayer/benchbackend
-    labels:
-      traefik.http.services.express.loadbalancer.server.port: 3000
-      traefik.http.routers.express.rule: 'Host(`express.test`)'
-      traefik.http.routers.express.tls: 'false'
-      traefik.http.routers.whoami.tls.certresolver: 'default'
-      traefik.enable: 'true'
-      #traefik.port: 300
-    environment:
-      PORT: 3000
+  # express:
+  #   image: eugenmayer/benchbackend
+  #   labels:
+  #     traefik.http.services.express.loadbalancer.server.port: 3000
+  #     traefik.http.routers.express.rule: 'Host(`express.test`)'
+  #     traefik.http.routers.express.tls: 'false'
+  #     traefik.http.routers.whoami.tls.certresolver: 'default'
+  #     traefik.enable: 'true'
+  #   environment:
+  #     PORT: 3000
   whoami:
     image: containous/whoami
     labels:
@@ -20,10 +19,16 @@ services:
       traefik.http.routers.whoami.tls: 'false'
       traefik.http.routers.whoami.tls.certresolver: 'default'
       traefik.enable: 'true'
-      #traefik.port: 80
   traefik:
     image: ghcr.io/eugenmayer/traefik:2.x
     restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 200000
+        hard: 200000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 80:8080
     environment:
@@ -38,3 +43,20 @@ services:
   client:
     image: skandyla/wrk
     entrypoint: 'sleep 80000'
+
+  nginx:
+    image: bitnami/nginx
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 200000
+        hard: 200000
+    volumes:
+      - ./nginx/nginx.conf:/opt/bitnami/nginx/conf/nginx.conf
+
+  envoy:
+    image: envoyproxy/envoy-dev:174924a24195765250e2d5b0fa8a4cbf7c8635ea
+    ports:
+      - '10000:10000'
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
