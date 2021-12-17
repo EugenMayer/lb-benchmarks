@@ -55,7 +55,7 @@ services:
       - ./nginx/nginx.conf:/opt/bitnami/nginx/conf/nginx.conf
 
   envoy:
-    image: envoyproxy/envoy-dev:174924a24195765250e2d5b0fa8a4cbf7c8635ea
+    image: envoyproxy/envoy:v1.20-latest
     ports:
       - '10000:10000'
     volumes:

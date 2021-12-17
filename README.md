@@ -38,4 +38,5 @@ docker-compose exec client wrk -t20 -c1000 -d30s -H "Host: whoami.test" --latenc
 
 baseline/traefik/nginx/envoy `MB/s`
 
-- E: 48/1/3/12
+- E: 48/1.5/3.5/12
+  specs: AMD Ryzen 7 5800X / 64GB RAM / NvME (WD Black SN850)
