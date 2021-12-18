@@ -36,6 +36,11 @@ make haproxy
 make envoy
 ```
 
+# Test suite
+
+- we use [wrk](https://github.com/wg/wrk) as a test client
+- Invoked via `wrk -t20 -c1000 -d30s -H "Host: whoami.test" --latency` so with 20 Threads and 1000 Connections over a time period of 30 seconds
+
 # Results
 
 | Baseline | Traefik | Nginx   | Haproxy | Envoy  | (Specs)                                                                 |
