@@ -56,7 +56,15 @@ services:
 
   envoy:
     image: envoyproxy/envoy:v1.20-latest
-    ports:
-      - '10000:10000'
     volumes:
       - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+
+  haproxy:
+    image: haproxy:2.1.2
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 200000
+        hard: 200000
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy
