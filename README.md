@@ -16,7 +16,7 @@ There are no particular reasons to not pick anything else, we just had the impre
 
 Open a PR and add a different backend/client for comparison anytime, happy to see those compared.
 
-Spoiler: It seems like Envoy beats everything - actually by a good margin.
+Spoiler: It seems like Envoy beats everything - actually by a good margin in the whoami
 
 # Usage
 
@@ -62,7 +62,32 @@ For minio we run
 
 ### minio
 
+### PUT only mode
+
 | Baseline | Traefik | Nginx   | Haproxy | Envoy   | (Specs)                                                                 |
 | -------- | ------- | ------- | ------- | ------- | ----------------------------------------------------------------------- |
-| tbaMB/s  | tbaMB/s | tbaMB/s | tbaMB/s | tbaMB/s | AMD Ryzen 7 5800X - 64GB RAM - NvME (WD Black SN850) - Linux 5.15 adm64 |
+| 367MB/s  | 375MB/s | n/aMB/s | 259MB/s | 318MB/s | AMD Ryzen 7 5800X - 64GB RAM - NvME (WD Black SN850) - Linux 5.15 adm64 |
+|          |         |         |         |         |                                                                         |
+
+### MIXED mode
+
+Cluster
+
+| Baseline | Traefik | Nginx   | Haproxy | Envoy   | (Specs)                                                                 |
+| -------- | ------- | ------- | ------- | ------- | ----------------------------------------------------------------------- |
+| 1037MB/s | 929MB/s | n/aMB/s | 921MB/s | 927MB/s | AMD Ryzen 7 5800X - 64GB RAM - NvME (WD Black SN850) - Linux 5.15 adm64 |
+|          |         |         |         |         |                                                                         |
+
+GET throughput
+
+| Baseline | Traefik | Nginx   | Haproxy | Envoy   | (Specs)                                                                 |
+| -------- | ------- | ------- | ------- | ------- | ----------------------------------------------------------------------- |
+| 778MB/s  | 698MB/s | n/aMB/s | 691MB/s | 695MB/s | AMD Ryzen 7 5800X - 64GB RAM - NvME (WD Black SN850) - Linux 5.15 adm64 |
+|          |         |         |         |         |                                                                         |
+
+PUT throughput
+
+| Baseline | Traefik | Nginx   | Haproxy | Envoy   | (Specs)                                                                 |
+| -------- | ------- | ------- | ------- | ------- | ----------------------------------------------------------------------- |
+| 258MB/s  | 232MB/s | n/aMB/s | 230MB/s | 231MB/s | AMD Ryzen 7 5800X - 64GB RAM - NvME (WD Black SN850) - Linux 5.15 adm64 |
 |          |         |         |         |         |                                                                         |

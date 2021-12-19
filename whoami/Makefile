@@ -3,7 +3,7 @@ nginx: start test
 	docker-compose exec client wrk -t20 -c1000 -d30s -H "Host: whoami.test" --latency  http://nginx:8080/bench
 
 haproxy: start test
-	echo "-------- haprox"
+echo "-------- haproxy"
 	docker-compose exec client wrk -t20 -c1000 -d30s -H "Host: whoami.test" --latency  http://haproxy:8080/bench
 
 traefik: start test
@@ -18,7 +18,7 @@ baseline: start test
 	echo "baseline"
 	docker-compose exec client wrk -t20 -c1000 -d30s -H "Host: whoami.test" --latency  http://whoami:80/bench
 
-all: start baseline traefik nginx envoy
+all: start baseline traefik haproxy nginx envoy
 
 start: 
 	docker-compose up -d
