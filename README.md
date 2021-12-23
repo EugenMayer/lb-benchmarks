@@ -16,7 +16,7 @@ There are no particular reasons to not pick anything else, we just had the impre
 
 Open a PR and add a different backend/client for comparison anytime, happy to see those compared.
 
-Spoiler: It seems like Envoy beats everything - actually by a good margin in the whoami
+Spoiler: It seems like Envoy beats everything - actually by a good margin in the whoami benachmar. The minio based benchmark looks very different, seems like Traefik can win by a tiny margin, or it is envoy here (but very close).
 
 # Usage
 
@@ -50,6 +50,7 @@ For minio we run
 
 - we use `minio/warp` as the benchmark client
 - Invoked via `warp put --host <> --access-key minio --secret-key miniominiominio --autoterm` so put tests only
+- Hint: `nginx` is not tested because we could not get it running with warp. We did not yet invest too much time fiddling this out, if you can, tell us :)
 
 # Results
 
